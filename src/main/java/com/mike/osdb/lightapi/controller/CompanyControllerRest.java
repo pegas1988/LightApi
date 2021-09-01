@@ -20,7 +20,7 @@ public class CompanyControllerRest {
     private final CompanyServiceImpl companyService;
 
     @GetMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<CompanyDto>> findAll(@RequestParam int size, @RequestParam int page) {
+    public ResponseEntity<Page<CompanyDto>> findAll(@RequestParam int size, @RequestParam int page) { //this method needs to be changed
         final PageRequest pageRequest = PageRequest.of(page, size);
         final Page<Company> companyPage = companyService.findAllPages(pageRequest);
         final Page<CompanyDto> companyDtoPage = companyPage
