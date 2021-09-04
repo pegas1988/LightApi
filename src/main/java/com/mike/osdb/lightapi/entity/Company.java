@@ -16,7 +16,7 @@ import java.sql.Date;
 public class Company {
 
     @Id
-    @Column(name = "company_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title")
@@ -25,9 +25,13 @@ public class Company {
     private String description;
     @Column(name = "founded")
     private String founded;
-    @Column(name = "createdBy")
-    private String createdBy;
-    @Column(name = "createdDate")
-    private Date createdDate;
+    @Column(name = "created_by")
+    private String created_by;
+    @Column(name = "created_date")
+    private Date created_date;
+
+    //    these field were added for liquibase testing
+    //    @Column(name = "price")
+    //    private int price;
 
 }
