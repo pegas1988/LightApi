@@ -2,6 +2,7 @@ package com.mike.osdb.lightapi.controller;
 
 import com.mike.osdb.lightapi.dto.CompanyDto;
 import com.mike.osdb.lightapi.entity.Company;
+import com.mike.osdb.lightapi.exception.ApiRequestException;
 import com.mike.osdb.lightapi.service.implementation.CompanyServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -71,7 +72,11 @@ public class CompanyControllerRest {
     @DeleteMapping(value = "/companies/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable @Parameter(description = "ID to find") Long id) {
-        companyService.deleteById(id);
+        try {
+            companyService.deleteById(id);
+        } catch (IllegalArgumentException e) {
+            throw new ApiRequestException("Huston, we have got a problems! Company with such ID doesnt exist!");
+        }
     }
 
     @Operation(
@@ -81,6 +86,10 @@ public class CompanyControllerRest {
     @PutMapping(value = "/companies/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateById(@PathVariable @Parameter(description = "ID to find") Long id, @RequestBody CompanyDto companyDto) {
-        companyService.updateById(id, companyDto);
+        try {
+            companyService.updateById(id, companyDto);
+        } catch (IllegalArgumentException e) {
+            throw new ApiRequestException("Huston, we have got a problems! Company with such ID doesnt exist!");
+        }
     }
 }

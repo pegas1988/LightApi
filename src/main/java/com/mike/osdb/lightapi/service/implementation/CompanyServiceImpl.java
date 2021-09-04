@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     @Transactional
-    public void updateById(Long id, CompanyDto companyDto) {
+    public void updateById(Long id, CompanyDto companyDto) throws IllegalArgumentException {
         if (!Objects.isNull(companyDto.getId())) {
             throw new IllegalArgumentException("Failed to update. Company with such ID doesnt exist.");
         }
@@ -58,7 +59,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws IllegalArgumentException {
         if (!companyDao.existsById(id)) {
             throw new IllegalArgumentException("Failed to delete. Company with such ID doesnt exist.");
         }
