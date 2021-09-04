@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,15 @@ public class CompanyControllerRest {
             description = "Sort and makes pagination"
     )
     @GetMapping(value = "/companies", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<CompanyDto>> findAll(@RequestParam @Parameter(description = "Page you wish to find") int page,
+    public ResponseEntity<Page<CompanyDto>> findAll(@RequestParam String sort,
+                                                    @RequestParam @Parameter(description = "Page you wish to find") int page,
                                                     @RequestParam @Parameter(description = "Quantity of the elements on a page") int size) {
-        final PageRequest pageRequest = PageRequest.of(page, size);
+        String[] array = sort.split(",");
+        PageRequest pageRequest;
+        if (array[1].equals("desc"))
+            pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, array[0]));
+        else
+            pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, array[0]));
         final Page<Company> companyPage = companyService.findAllPages(pageRequest);
         final Page<CompanyDto> companyDtoPage = companyPage
                 .map(company -> {

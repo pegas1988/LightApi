@@ -29,9 +29,4 @@ public class Company {
     private String created_by;
     @Column(name = "created_date")
     private Date created_date;
-
-    //    these field were added for liquibase testing
-    //    @Column(name = "price")
-    //    private int price;
-
 }

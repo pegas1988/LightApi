@@ -25,8 +25,4 @@ public class CompanyDto {
     private String created_by;
     @Schema(description = "When was created?", example = "25.01.1920")
     private Date created_date;
-
-    //    these field were added for liquibase testing
-    //    @Schema(description = "The price of the company in USD", example = "10000")
-    //    private int price;
 }
