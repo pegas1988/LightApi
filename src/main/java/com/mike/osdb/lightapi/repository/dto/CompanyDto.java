@@ -1,4 +1,4 @@
-package com.mike.osdb.lightapi.dto;
+package com.mike.osdb.lightapi.repository.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -15,14 +15,19 @@ public class CompanyDto {
 
     @Schema(description = "ID of the entity", example = "Auto generated")
     private Long id;
+
     @Schema(description = "Some title", example = "We teach you swimm")
     private String title;
+
     @Schema(description = "Description of a company", example = "The factory of a swimming pools")
     private String description;
+
     @Schema(description = "Who is a founder?", example = "Mike")
     private String founded;
+
     @Schema(description = "Who create?", example = "Mike`s friend")
-    private String created_by;
+    private String createdBy;
+
     @Schema(description = "When was created?", example = "25.01.1920")
-    private Date created_date;
+    private Date createdDate;
 }

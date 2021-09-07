@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.mike.osdb.lightapi.dao"})
+@EnableJpaRepositories(basePackages = {"com.mike.osdb.lightapi.repository.dao"})
 @PropertySource("classpath:application.properties")
 @SpringBootApplication
 public class LightApiApplication {

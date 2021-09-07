@@ -1,4 +1,4 @@
-package com.mike.osdb.lightapi.exception;
+package com.mike.osdb.lightapi.controller.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +14,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = {ApiRequestException.class})
     public ResponseEntity<Object> handleApiRequestException(ApiRequestException exception) {
         HttpStatus bad = HttpStatus.INTERNAL_SERVER_ERROR;
-        ApiException apiException = new ApiException(
+        ApiExceptionEntity apiExceptionEntity = new ApiExceptionEntity(
                 exception.getMessage(),
                 bad,
                 ZonedDateTime.now(ZoneId.of("Z"))
         );
-        return new ResponseEntity<>(apiException, bad);
+        return new ResponseEntity<>(apiExceptionEntity, bad);
     }
 }

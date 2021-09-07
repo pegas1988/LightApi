@@ -1,9 +1,9 @@
 package com.mike.osdb.lightapi.controller;
 
-import com.mike.osdb.lightapi.dto.CompanyDto;
-import com.mike.osdb.lightapi.entity.Company;
-import com.mike.osdb.lightapi.exception.ApiRequestException;
-import com.mike.osdb.lightapi.service.implementation.CompanyServiceImpl;
+import com.mike.osdb.lightapi.controller.exception.ApiRequestException;
+import com.mike.osdb.lightapi.repository.dto.CompanyDto;
+import com.mike.osdb.lightapi.repository.entity.Company;
+import com.mike.osdb.lightapi.service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,18 +18,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/v1/")
+@RequestMapping(value = "/api/v1/companies/")
 @RequiredArgsConstructor
-@Tag(name = "Light Api REST Controller", description = "it makes some simple queries")
+@Tag(name = "Light Api REST Controller",
+        description = "It makes some simple queries")
 public class CompanyControllerRest {
 
-    private final CompanyServiceImpl companyService;
+    private final CompanyService companyService;
 
     @Operation(
             summary = "Find all users",
             description = "Sort and makes pagination"
     )
-    @GetMapping(value = "/companies", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<CompanyDto>> findAll(@RequestParam String sort,
                                                     @RequestParam @Parameter(description = "Page you wish to find") int page,
                                                     @RequestParam @Parameter(description = "Quantity of the elements on a page") int size) {
@@ -53,8 +54,8 @@ public class CompanyControllerRest {
             summary = "Find user by ID",
             description = "Helps to find needed user"
     )
-    @GetMapping(value = "/companies/{id}")
-    public ResponseEntity<CompanyDto> findById(@PathVariable @Parameter(description = "ID to find") Long id) {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CompanyDto> findById(@PathVariable @Parameter(description = "ID for example: 5") Long id) {
         final Company company = companyService.findById(id);
         CompanyDto companyDto = new CompanyDto();
         BeanUtils.copyProperties(company, companyDto);
@@ -76,13 +77,13 @@ public class CompanyControllerRest {
             summary = "Delete user by ID",
             description = "Helps to delete user"
     )
-    @DeleteMapping(value = "/companies/{id}")
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable @Parameter(description = "ID to find") Long id) {
+    public void delete(@PathVariable @Parameter(description = "ID for example: 5") Long id) {
         try {
             companyService.deleteById(id);
         } catch (IllegalArgumentException e) {
-            throw new ApiRequestException("Huston, we have got a problems! Company with such ID doesnt exist!");
+            throw new ApiRequestException("Huston, we have got a problems! Company with such ID doesnt exists!");
         }
     }
 
@@ -90,13 +91,13 @@ public class CompanyControllerRest {
             summary = "Update user",
             description = "You can change any fields you want by sending JSON"
     )
-    @PutMapping(value = "/companies/{id}")
+    @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateById(@PathVariable @Parameter(description = "ID to find") Long id, @RequestBody CompanyDto companyDto) {
+    public void updateById(@PathVariable @Parameter(description = "ID for example: 5") Long id, @RequestBody CompanyDto companyDto) {
         try {
             companyService.updateById(id, companyDto);
         } catch (IllegalArgumentException e) {
-            throw new ApiRequestException("Huston, we have got a problems! Company with such ID doesnt exist!");
+            throw new ApiRequestException("Huston, we have got a problems! Company with such ID doesnt exists!");
         }
     }
 }
